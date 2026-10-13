@@ -1,0 +1,1013 @@
+﻿
+/* ========================================
+   FINEFLOW - PASTEL ADMIN DASHBOARD
+   ASP.NET Core MVC / Bootstrap 5
+   ======================================== */
+
+/* RENK PALETI */
+
+:root {
+    --page-bg: #f7f8fc;
+    --sidebar-bg: #f0ebfa;
+    --sidebar-active: #e1d5f6;
+    --purple: #8067b2;
+    --purple-dark: #55417f;
+    --text-main: #303345;
+    --text-muted: #85899b;
+    --border-soft: #eceef4;
+}
+
+/* GENEL */
+
+body.app-body {
+    margin: 0;
+    padding: 0;
+    background: var(--page-bg);
+    color: var(--text-main);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+}
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ========================================
+   SOL MENU - SIDEBAR
+   ======================================== */
+
+.app-sidebar {
+    width: 255px;
+    flex-shrink: 0;
+    background: var(--sidebar-bg);
+    border-right: 1px solid #e7def6;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 22px;
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--purple);
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.brand-name {
+    font-size: 21px;
+    font-weight: 750;
+    color: var(--purple-dark);
+}
+
+.brand-subtitle {
+    color: #8e85a5;
+    font-size: 11px;
+}
+
+.sidebar-navigation {
+    padding: 10px 15px;
+}
+
+.sidebar-label {
+    margin: 16px 12px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    color: #a097b4;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 15px;
+    margin: 5px 0;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #675d7d;
+    font-weight: 500;
+    transition: background .2s, color .2s;
+}
+
+    .sidebar-link:hover {
+        background: #e9e0f8;
+        color: var(--purple-dark);
+    }
+
+    .sidebar-link.active {
+        background: var(--sidebar-active);
+        color: var(--purple-dark);
+        font-weight: 700;
+    }
+
+.sidebar-icon {
+    font-size: 19px;
+    width: 23px;
+    text-align: center;
+}
+
+.sidebar-bottom {
+    padding: 20px;
+    margin-top: auto;
+}
+
+.sidebar-info {
+    padding: 14px;
+    background: #ffffff99;
+    border-radius: 12px;
+    color: #67617a;
+    font-size: 12px;
+}
+
+.sidebar-info-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8ccbb0;
+    margin-right: 6px;
+}
+
+.sidebar-version {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #a19ab1;
+}
+
+/* ========================================
+   ANA ICERIK VE UST BAR
+   ======================================== */
+
+.app-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+}
+
+.app-topbar {
+    min-height: 82px;
+    padding: 17px 32px;
+    background: #fff;
+    border-bottom: 1px solid var(--border-soft);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.topbar-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 3px;
+}
+
+.topbar-user .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.topbar-user .nav-link {
+    color: var(--purple-dark) !important;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.sidebar-toggle {
+    background: #eee7fa;
+    color: var(--purple-dark);
+}
+
+.app-content {
+    flex: 1;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 26px 24px 45px;
+}
+
+.app-footer {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: normal !important;
+    padding: 18px 32px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: #fff;
+}
+
+/* ========================================
+   KARTLAR VE TABLOLAR
+   ======================================== */
+
+.app-content .card {
+    border: 1px solid var(--border-soft) !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(48, 43, 84, .035) !important;
+}
+
+.app-content .card-header {
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.app-content .table {
+    color: var(--text-main);
+}
+
+    .app-content .table thead {
+        background: #f8f7fc;
+    }
+
+    .app-content .table th {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .app-content .table td {
+        padding-top: 13px;
+        padding-bottom: 13px;
+    }
+
+.app-content h2 {
+    color: #343247;
+}
+
+/* ========================================
+   FORMLAR VE BUTONLAR
+   ======================================== */
+
+.app-content .form-control,
+.app-content .form-select {
+    border: 1px solid #e2e1eb;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+    .app-content .form-control:focus,
+    .app-content .form-select:focus {
+        border-color: #b3a0dc;
+        box-shadow: 0 0 0 3px #e8dff7;
+    }
+
+.app-content .btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.app-content .btn-primary {
+    background: var(--purple);
+    border-color: var(--purple);
+}
+
+    .app-content .btn-primary:hover {
+        background: var(--purple-dark);
+        border-color: var(--purple-dark);
+    }
+
+.app-content .btn-outline-primary {
+    border-color: var(--purple);
+    color: var(--purple-dark);
+}
+
+    .app-content .btn-outline-primary:hover {
+        background: var(--purple);
+        color: white;
+    }
+
+.app-content .badge {
+    border-radius: 7px;
+    padding: 6px 9px;
+    font-weight: 600;
+}
+
+/* ========================================
+   DASHBOARD - GENEL
+   ======================================== */
+
+.dashboard-page {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* KARSILAMA ALANI */
+
+.dashboard-welcome {
+    background: linear-gradient(110deg, #eae0fa, #f7ecf2);
+    border-radius: 22px;
+    padding: 30px 36px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    overflow: hidden;
+}
+
+.welcome-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #9077b2;
+    margin-bottom: 10px;
+}
+
+.dashboard-welcome h1 {
+    font-size: 29px;
+    font-weight: 750;
+    color: #493b69;
+    margin-bottom: 10px;
+}
+
+.dashboard-welcome p {
+    color: #82758f;
+    margin-bottom: 16px;
+}
+
+.welcome-role {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 30px;
+    background: #ffffffad;
+    color: #71578f;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.welcome-symbol {
+    font-size: 100px;
+    line-height: 1;
+    color: #bd9cdd;
+    opacity: .7;
+}
+
+/* BOLUM BASLIKLARI */
+
+.dashboard-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+    .dashboard-section-heading h4 {
+        font-weight: 700;
+        font-size: 19px;
+        margin: 0;
+    }
+
+    .dashboard-section-heading p,
+    .panel-heading p {
+        color: #9593a4;
+        font-size: 12px;
+        margin: 5px 0 0;
+    }
+
+.dashboard-live {
+    font-size: 11px;
+    color: #498f72;
+    background: #e6f4ec;
+    padding: 8px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* ========================================
+   PASTEL ISTATISTIK KARTLARI
+   ======================================== */
+
+.stat-card {
+    border-radius: 18px;
+    padding: 23px;
+    min-height: 175px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform .2s;
+}
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+
+.pastel-lavender {
+    background: #ece4fa;
+}
+
+.pastel-peach {
+    background: #fae8e2;
+}
+
+.pastel-yellow {
+    background: #f8efd3;
+}
+
+.pastel-mint {
+    background: #e0f1e9;
+}
+
+.stat-symbol {
+    font-size: 23px;
+    margin-bottom: 9px;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 750;
+    color: #383447;
+    line-height: 1.2;
+}
+
+.stat-title {
+    font-size: 13px;
+    color: #6d697a;
+    margin-top: 5px;
+}
+
+.stat-link {
+    font-size: 11px;
+    color: #665380;
+    text-decoration: none;
+    margin-top: auto;
+    padding-top: 13px;
+    font-weight: 600;
+}
+
+    .stat-link:hover {
+        color: var(--purple-dark);
+        text-decoration: underline;
+    }
+
+/* ========================================
+   DASHBOARD PANELLERI
+   ======================================== */
+
+.dashboard-panel {
+    background: #fff;
+    border: 1px solid #ecebf3;
+    border-radius: 18px;
+    padding: 23px;
+    box-shadow: 0 5px 25px rgba(44, 38, 80, .035);
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+    .panel-heading h5 {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+.panel-icon {
+    font-size: 23px;
+}
+
+/* CEZA DURUM DAGILIMI */
+
+.distribution-track {
+    display: flex;
+    width: 100%;
+    height: 18px;
+    overflow: hidden;
+    border-radius: 30px;
+    background: #f1f1f5;
+}
+
+.distribution-segment {
+    height: 100%;
+}
+
+.bg-pending {
+    background: #e9cf83;
+}
+
+.bg-completed {
+    background: #9dd7b9;
+}
+
+.bg-rejected {
+    background: #e8a6a6;
+}
+
+.bg-other {
+    background: #c7b6ec;
+}
+
+.distribution-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #848194;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.distribution-value {
+    font-size: 23px;
+    font-weight: 700;
+    margin-top: 7px;
+}
+
+/* TOPLAM TUTAR */
+
+.dashboard-amount {
+    background: #f8f6fc;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+    .dashboard-amount span {
+        font-size: 12px;
+        color: #80788e;
+    }
+
+    .dashboard-amount strong {
+        font-size: 20px;
+        color: #55417f;
+    }
+
+/* ========================================
+   HIZLI ISLEMLER
+   ======================================== */
+
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quick-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px;
+    border-radius: 12px;
+    background: #f8f7fb;
+    color: #554a70;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background .2s;
+}
+
+    .quick-action:hover {
+        background: #eee7fa;
+        color: #55417f;
+    }
+
+    .quick-action span:last-child {
+        margin-left: auto;
+    }
+
+.quick-icon {
+    font-size: 19px;
+}
+
+.dashboard-role-note {
+    margin-top: 18px;
+    background: #e5f3eb;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #3e8063;
+    font-size: 12px;
+}
+
+    .dashboard-role-note strong {
+        font-size: 27px;
+    }
+
+/* ========================================
+   DURUM ETIKETLERI
+   ======================================== */
+
+.dashboard-status {
+    display: inline-block;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-completed {
+    background: #def2e7;
+    color: #327451;
+}
+
+.status-rejected {
+    background: #fae3e3;
+    color: #b45656;
+}
+
+.status-pending {
+    background: #fbefd0;
+    color: #886b23;
+}
+
+/* TABLO DUZENLEMELERI */
+
+.dashboard-panel .table {
+    margin-bottom: 0;
+}
+
+    .dashboard-panel .table th {
+        color: #77728a;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .dashboard-panel .table td {
+        vertical-align: middle;
+        font-size: 13px;
+    }
+
+.dashboard-panel .table-responsive {
+    overflow-x: auto;
+}
+
+/* ========================================
+   RESPONSIVE - TABLET
+   ======================================== */
+
+@media (min-width: 992px) {
+    .app-sidebar {
+        min-height: 100vh;
+    }
+
+    #appSidebarNav {
+        display: flex !important;
+        flex-direction: column;
+        flex: 1;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .app-shell {
+        display: block;
+    }
+
+    .app-sidebar {
+        width: 100%;
+    }
+
+    .sidebar-brand {
+        padding: 15px 20px;
+    }
+
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .app-topbar {
+        padding: 14px 18px;
+    }
+
+    .app-content {
+        padding: 18px 12px 35px;
+    }
+
+    .topbar-title {
+        font-size: 14px;
+    }
+
+    .dashboard-welcome {
+        padding: 25px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MOBIL
+   ======================================== */
+
+@media (max-width: 575.98px) {
+    .app-topbar {
+        flex-wrap: wrap;
+    }
+
+    .topbar-user {
+        width: 100%;
+    }
+
+    .app-content h2 {
+        font-size: 23px;
+    }
+
+    .dashboard-welcome {
+        padding: 23px;
+    }
+
+    .welcome-symbol {
+        display: none;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 24px;
+    }
+
+    .dashboard-section-heading {
+        flex-wrap: wrap;
+    }
+
+    .dashboard-panel {
+        padding: 16px;
+    }
+
+    .stat-card {
+        padding: 16px;
+        min-height: 165px;
+    }
+
+    .stat-number {
+        font-size: 27px;
+    }
+
+    .dashboard-amount strong {
+        font-size: 17px;
+    }
+
+    .quick-action {
+        padding: 12px;
+    }
+}
+
+/* ========================================
+   FINEFLOW - PROFESSIONAL ICON UPDATE
+   ======================================== */
+
+.svg-icon-library {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.ui-icon {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+/* Sidebar */
+
+.sidebar-brand:hover {
+    color: inherit;
+}
+
+.brand-icon .ui-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.sidebar-link .ui-icon {
+    width: 19px;
+    height: 19px;
+    opacity: 0.85;
+}
+
+.sidebar-link.active .ui-icon {
+    opacity: 1;
+    stroke-width: 2.2;
+}
+
+/* Welcome */
+
+.welcome-decoration {
+    width: 105px;
+    height: 105px;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-8deg);
+    flex-shrink: 0;
+}
+
+    .welcome-decoration .ui-icon {
+        width: 49px;
+        height: 49px;
+        color: #9878c0;
+        stroke-width: 1.3;
+    }
+
+/* Statistic cards */
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    background: rgba(255,255,255,0.55);
+    margin-bottom: 15px;
+}
+
+    .stat-icon .ui-icon {
+        width: 23px;
+        height: 23px;
+        stroke-width: 1.8;
+    }
+
+.pastel-lavender .stat-icon {
+    color: #6e569d;
+}
+
+.pastel-peach .stat-icon {
+    color: #a66c63;
+}
+
+.pastel-yellow .stat-icon {
+    color: #98762f;
+}
+
+.pastel-mint .stat-icon {
+    color: #427f65;
+}
+
+.stat-card {
+    min-height: 205px;
+}
+
+.stat-number {
+    font-size: 35px;
+    letter-spacing: -1px;
+}
+
+.stat-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .stat-link .ui-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+/* Panel headings */
+
+.panel-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    background: #f3effb;
+    color: #8067b2;
+}
+
+    .panel-header-icon .ui-icon {
+        width: 21px;
+        height: 21px;
+    }
+
+/* Quick actions */
+
+.quick-action {
+    min-height: 58px;
+}
+
+.quick-action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: #eee8f8;
+    color: #8067b2;
+    flex-shrink: 0;
+}
+
+    .quick-action-icon .ui-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+.quick-action .quick-arrow {
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+    color: #9685ad;
+}
+
+.quick-action:hover .quick-arrow {
+    transform: translateX(3px);
+    transition: transform .2s;
+}
+
+/* Role information */
+
+.dashboard-role-note .ui-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+/* Total amount */
+
+.dashboard-amount .ui-icon {
+    width: 19px;
+    height: 19px;
+    color: #8067b2;
+}
+
+/* Table and action buttons */
+
+.dashboard-panel .btn .ui-icon {
+    width: 14px;
+    height: 14px;
+    margin-left: 4px;
+}
+
+.dashboard-panel .table th {
+    font-weight: 650;
+}
+
+/* Live status */
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #5aaa86;
+    margin-right: 5px;
+}
+
+@media (max-width: 575.98px) {
+    .welcome-decoration {
+        display: none;
+    }
+
+    .stat-card {
+        min-height: 185px;
+    }
+
+    .stat-number {
+        font-size: 30px;
+    }
+}

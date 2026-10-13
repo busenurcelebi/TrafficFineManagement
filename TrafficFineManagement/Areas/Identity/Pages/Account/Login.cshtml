@@ -1,0 +1,181 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+}
+
+<div class="ff-login-page">
+
+    <div class="ff-login-container">
+
+        <div class="ff-login-brand">
+            <span class="ff-login-brand-icon">
+                <svg class="ui-icon" aria-hidden="true">
+                    <use href="#icon-approval"></use>
+                </svg>
+            </span>
+
+            <div>
+                <strong>FineFlow</strong>
+                <small>Trafik Cezası Yönetim Sistemi</small>
+            </div>
+        </div>
+
+        <div class="ff-login-grid">
+
+            <section class="ff-login-intro">
+                <div class="ff-intro-icon">
+                    <svg class="ui-icon" aria-hidden="true">
+                        <use href="#icon-dashboard"></use>
+                    </svg>
+                </div>
+
+                <div class="ff-intro-label">
+                    FINEFLOW YÖNETİM PLATFORMU
+                </div>
+
+                <h1>
+                    Tüm süreçleriniz
+                    <span>tek panelde.</span>
+                </h1>
+
+                <p>
+                    Araç kayıtlarını, trafik cezalarını
+                    ve onay süreçlerini güvenli ve düzenli
+                    bir şekilde yönetin.
+                </p>
+
+                <div class="ff-intro-features">
+
+                    <div class="ff-intro-feature">
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-check"></use>
+                        </svg>
+                        <span>İki aşamalı onay yönetimi</span>
+                    </div>
+
+                    <div class="ff-intro-feature">
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-approval"></use>
+                        </svg>
+                        <span>Rol bazlı yetkilendirme</span>
+                    </div>
+
+                    <div class="ff-intro-feature">
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-chart"></use>
+                        </svg>
+                        <span>Güncel rapor ve istatistikler</span>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="ff-login-form-panel">
+
+                <div class="ff-login-form-heading">
+                    <span class="ff-login-eyebrow">
+                        HESAP ERİŞİMİ
+                    </span>
+
+                    <h2>Tekrar hoş geldiniz</h2>
+
+                    <p>
+                        Hesabınıza giriş yaparak devam edin.
+                    </p>
+                </div>
+
+                <form id="account"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"
+                         role="alert">
+                    </div>
+
+                    <div class="ff-form-group">
+                        <label asp-for="Input.Email">
+                            E-posta adresi
+                        </label>
+
+                        <input asp-for="Input.Email"
+                               class="form-control"
+                               autocomplete="username"
+                               aria-required="true"
+                               placeholder="ornek@firma.com" />
+
+                        <span asp-validation-for="Input.Email"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="ff-form-group">
+                        <label asp-for="Input.Password">
+                            Şifre
+                        </label>
+
+                        <input asp-for="Input.Password"
+                               class="form-control"
+                               autocomplete="current-password"
+                               aria-required="true"
+                               placeholder="Şifrenizi girin" />
+
+                        <span asp-validation-for="Input.Password"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="ff-login-options">
+                        <label class="ff-remember-label">
+                            <input asp-for="Input.RememberMe"
+                                   class="form-check-input" />
+                            <span>Beni hatırla</span>
+                        </label>
+
+                        <a asp-page="./ForgotPassword"
+                           id="forgot-password">
+                            Şifremi unuttum
+                        </a>
+                    </div>
+
+                    <button id="login-submit"
+                            type="submit"
+                            class="ff-login-submit">
+                        Giriş Yap
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-arrow"></use>
+                        </svg>
+                    </button>
+
+                    <div class="ff-login-register">
+                        Hesabınız yok mu?
+                        <a asp-page="./Register"
+                           asp-route-returnUrl="@Model.ReturnUrl">
+                            Kayıt Ol
+                        </a>
+                    </div>
+
+                </form>
+
+                <div class="ff-login-security">
+                    <svg class="ui-icon" aria-hidden="true">
+                        <use href="#icon-approval"></use>
+                    </svg>
+                    Güvenli kullanıcı girişi
+                </div>
+
+            </section>
+
+        </div>
+
+        <div class="ff-login-footer">
+            © 2026 FineFlow · Trafik Cezası Yönetim Sistemi
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

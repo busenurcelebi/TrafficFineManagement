@@ -1,0 +1,184 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+}
+
+<div class="ff-login-page">
+    <div class="ff-login-container">
+
+        <div class="ff-login-brand">
+            <span class="ff-login-brand-icon">
+                <svg class="ui-icon" aria-hidden="true">
+                    <use href="#icon-approval"></use>
+                </svg>
+            </span>
+
+            <div>
+                <strong>FineFlow</strong>
+                <small>Trafik Cezası Yönetim Sistemi</small>
+            </div>
+        </div>
+
+        <div class="ff-login-grid">
+
+            <!-- SOL TANITIM ALANI -->
+
+            <section class="ff-login-intro">
+
+                <div class="ff-intro-icon">
+                    <svg class="ui-icon" aria-hidden="true">
+                        <use href="#icon-dashboard"></use>
+                    </svg>
+                </div>
+
+                <div class="ff-intro-label">
+                    FINEFLOW YÖNETİM PLATFORMU
+                </div>
+
+                <h1>
+                    FineFlow'a
+                    <span>hoş geldiniz.</span>
+                </h1>
+
+                <p>
+                    Araç kayıtlarını, trafik cezalarını
+                    ve onay süreçlerini tek platformdan
+                    takip etmek için hesabınızı oluşturun.
+                </p>
+
+                <div class="ff-intro-features">
+                    <div class="ff-intro-feature">
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-check"></use>
+                        </svg>
+                        <span>Araç ve ceza yönetimi</span>
+                    </div>
+
+                    <div class="ff-intro-feature">
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-approval"></use>
+                        </svg>
+                        <span>Rol bazlı onay sistemi</span>
+                    </div>
+
+                    <div class="ff-intro-feature">
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-chart"></use>
+                        </svg>
+                        <span>Detaylı işlem geçmişi</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SAG KAYIT FORMU -->
+
+            <section class="ff-login-form-panel">
+
+                <div class="ff-login-form-heading">
+                    <span class="ff-login-eyebrow">
+                        YENİ HESAP
+                    </span>
+
+                    <h2>Hesap Oluştur</h2>
+
+                    <p>
+                        Bilgilerinizi girerek hesabınızı oluşturun.
+                    </p>
+                </div>
+
+                <form id="registerForm"
+                      asp-route-returnUrl="@Model.ReturnUrl"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"
+                         role="alert">
+                    </div>
+
+                    <div class="ff-form-group">
+                        <label asp-for="Input.Email">
+                            E-posta adresi
+                        </label>
+
+                        <input asp-for="Input.Email"
+                               class="form-control"
+                               autocomplete="username"
+                               aria-required="true"
+                               placeholder="ornek@firma.com" />
+
+                        <span asp-validation-for="Input.Email"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="ff-form-group">
+                        <label asp-for="Input.Password">
+                            Şifre
+                        </label>
+
+                        <input asp-for="Input.Password"
+                               class="form-control"
+                               autocomplete="new-password"
+                               aria-required="true"
+                               placeholder="Şifrenizi oluşturun" />
+
+                        <span asp-validation-for="Input.Password"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="ff-form-group">
+                        <label asp-for="Input.ConfirmPassword">
+                            Şifre Tekrarı
+                        </label>
+
+                        <input asp-for="Input.ConfirmPassword"
+                               class="form-control"
+                               autocomplete="new-password"
+                               aria-required="true"
+                               placeholder="Şifrenizi tekrar girin" />
+
+                        <span asp-validation-for="Input.ConfirmPassword"
+                              class="text-danger"></span>
+                    </div>
+
+                    <button id="registerSubmit"
+                            type="submit"
+                            class="ff-login-submit">
+                        Hesap Oluştur
+
+                        <svg class="ui-icon" aria-hidden="true">
+                            <use href="#icon-arrow"></use>
+                        </svg>
+                    </button>
+
+                    <div class="ff-login-register">
+                        Zaten hesabınız var mı?
+
+                        <a asp-area="Identity"
+                           asp-page="/Account/Login">
+                            Giriş Yap
+                        </a>
+                    </div>
+                </form>
+
+                <div class="ff-login-security">
+                    <svg class="ui-icon" aria-hidden="true">
+                        <use href="#icon-approval"></use>
+                    </svg>
+
+                    Güvenli hesap oluşturma
+                </div>
+            </section>
+        </div>
+
+        <div class="ff-login-footer">
+            © 2026 FineFlow · Trafik Cezası Yönetim Sistemi
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

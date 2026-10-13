@@ -1,0 +1,109 @@
+﻿@model TrafficFineManagement.ViewModels.CreateTrafficFineViewModel
+
+@{
+    ViewData["Title"] = "Yeni Trafik Cezası";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="mb-4">
+                <h2 class="fw-bold">Yeni Trafik Cezası</h2>
+                <p class="text-muted">
+                    Trafik cezası bilgilerini girerek kayıt oluşturun.
+                </p>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <form asp-controller="TrafficFines"
+                          asp-action="Create"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="VehicleId"
+                                   class="form-label"></label>
+
+                            <select asp-for="VehicleId"
+                                    asp-items="ViewBag.Vehicles"
+                                    class="form-select">
+                                <option value="">Araç seçiniz</option>
+                            </select>
+
+                            <span asp-validation-for="VehicleId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FineNumber"
+                                   class="form-label"></label>
+                            <input asp-for="FineNumber"
+                                   class="form-control"
+                                   placeholder="Örn: TRF20260001" />
+                            <span asp-validation-for="FineNumber"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Amount"
+                                   class="form-label"></label>
+                            <input asp-for="Amount"
+                                   type="number"
+                                   step="0.01"
+                                   min="0.01"
+                                   class="form-control" />
+                            <span asp-validation-for="Amount"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FineDate"
+                                   class="form-label"></label>
+                            <input asp-for="FineDate"
+                                   type="date"
+                                   class="form-control" />
+                            <span asp-validation-for="FineDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Description"
+                                   class="form-label"></label>
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Ceza açıklamasını yazınız."></textarea>
+                            <span asp-validation-for="Description"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-controller="TrafficFines"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary">
+                                Geri Dön
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Cezayı Kaydet
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

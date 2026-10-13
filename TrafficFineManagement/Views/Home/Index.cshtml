@@ -1,0 +1,485 @@
+﻿@model TrafficFineManagement.ViewModels.DashboardViewModel
+@using TrafficFineManagement.Enums
+@using TrafficFineManagement.Helpers
+@using TrafficFineManagement.Seed
+
+@{
+    ViewData["Title"] = "Genel Bakış";
+
+    int pending = Model.PendingManager + Model.PendingFinance;
+
+    int accounted = pending + Model.CompletedFines
+        + Model.RejectedFines;
+
+    int other = Math.Max(0, Model.TotalFines - accounted);
+
+    double total = Math.Max(1, Model.TotalFines);
+
+    double pendingPct = pending / total * 100;
+    double completedPct = Model.CompletedFines / total * 100;
+    double rejectedPct = Model.RejectedFines / total * 100;
+    double otherPct = other / total * 100;
+
+    string role = User.IsInRole(IdentitySeeder.AdminRole)
+        ? "Sistem Yöneticisi"
+        : User.IsInRole(IdentitySeeder.ManagerRole)
+            ? "Yönetici"
+            : User.IsInRole(IdentitySeeder.FinanceRole)
+                ? "Finans"
+                : "Kullanıcı";
+
+    int myPending = User.IsInRole(IdentitySeeder.ManagerRole)
+        ? Model.PendingManager
+        : User.IsInRole(IdentitySeeder.FinanceRole)
+            ? Model.PendingFinance
+            : 0;
+}
+
+<div class="dashboard-page">
+
+    <!-- KARSILAMA -->
+
+    <section class="dashboard-welcome">
+
+        <div>
+            <div class="welcome-eyebrow">
+                FINEFLOW / YÖNETİM PANELİ
+            </div>
+
+            <h1>Genel Bakış</h1>
+
+            <p>
+                Trafik cezalarını, araç bilgilerini ve
+                onay süreçlerini tek panelden yönetin.
+            </p>
+
+            <span class="welcome-role">
+                @role Paneli
+            </span>
+        </div>
+
+        <div class="welcome-decoration" aria-hidden="true">
+            <svg class="ui-icon">
+                <use href="#icon-chart"></use>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ISTATISTIKLER -->
+
+    <div class="dashboard-section-heading">
+
+        <div>
+            <h4>Genel İstatistikler</h4>
+            <p>Sistemdeki kayıtların güncel özeti</p>
+        </div>
+
+        <span class="dashboard-live">
+            <span class="live-dot"></span>
+            Güncel Veriler
+        </span>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-6 col-xl-3">
+            <div class="stat-card pastel-lavender">
+
+                <div class="stat-icon">
+                    <svg class="ui-icon">
+                        <use href="#icon-car"></use>
+                    </svg>
+                </div>
+
+                <div class="stat-number">
+                    @Model.TotalVehicles
+                </div>
+
+                <div class="stat-title">
+                    Toplam Araç
+                </div>
+
+                <a asp-controller="Vehicles"
+                   asp-action="Index"
+                   class="stat-link">
+                    Araçları Gör
+                    <svg class="ui-icon">
+                        <use href="#icon-arrow"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="stat-card pastel-peach">
+
+                <div class="stat-icon">
+                    <svg class="ui-icon">
+                        <use href="#icon-file"></use>
+                    </svg>
+                </div>
+
+                <div class="stat-number">
+                    @Model.TotalFines
+                </div>
+
+                <div class="stat-title">
+                    Toplam Trafik Cezası
+                </div>
+
+                <a asp-controller="TrafficFines"
+                   asp-action="Index"
+                   class="stat-link">
+                    Cezaları Gör
+                    <svg class="ui-icon">
+                        <use href="#icon-arrow"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="stat-card pastel-yellow">
+
+                <div class="stat-icon">
+                    <svg class="ui-icon">
+                        <use href="#icon-clock"></use>
+                    </svg>
+                </div>
+
+                <div class="stat-number">
+                    @pending
+                </div>
+
+                <div class="stat-title">
+                    Onay Bekleyen
+                </div>
+
+                <a asp-controller="TrafficFines"
+                   asp-action="Index"
+                   class="stat-link">
+                    Kayıtları İncele
+                    <svg class="ui-icon">
+                        <use href="#icon-arrow"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="stat-card pastel-mint">
+
+                <div class="stat-icon">
+                    <svg class="ui-icon">
+                        <use href="#icon-check"></use>
+                    </svg>
+                </div>
+
+                <div class="stat-number">
+                    @Model.CompletedFines
+                </div>
+
+                <div class="stat-title">
+                    Tamamlanan Cezalar
+                </div>
+
+                <a asp-controller="TrafficFines"
+                   asp-action="Index"
+                   class="stat-link">
+                    Detayları Gör
+                    <svg class="ui-icon">
+                        <use href="#icon-arrow"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ANALIZ + HIZLI ISLEMLER -->
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-lg-8">
+            <section class="dashboard-panel h-100">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <h5>Ceza Durum Analizi</h5>
+                        <p>Trafik cezalarının durum dağılımı</p>
+                    </div>
+
+                    <div class="panel-header-icon">
+                        <svg class="ui-icon">
+                            <use href="#icon-chart"></use>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="distribution-track"
+                     role="img"
+                     aria-label="Ceza durum dağılımı: @pending bekleyen, @Model.CompletedFines tamamlanan, @Model.RejectedFines reddedilen, @other diğer">
+
+                    <div class="distribution-segment bg-pending"
+                         style="width:@(pendingPct.ToString(System.Globalization.CultureInfo.InvariantCulture))%">
+                    </div>
+
+                    <div class="distribution-segment bg-completed"
+                         style="width:@(completedPct.ToString(System.Globalization.CultureInfo.InvariantCulture))%">
+                    </div>
+
+                    <div class="distribution-segment bg-rejected"
+                         style="width:@(rejectedPct.ToString(System.Globalization.CultureInfo.InvariantCulture))%">
+                    </div>
+
+                    <div class="distribution-segment bg-other"
+                         style="width:@(otherPct.ToString(System.Globalization.CultureInfo.InvariantCulture))%">
+                    </div>
+                </div>
+
+                <div class="row g-3 mt-3">
+
+                    <div class="col-6 col-md-3">
+                        <div class="distribution-label">
+                            <span class="legend-dot bg-pending"></span>
+                            Bekleyen
+                        </div>
+                        <div class="distribution-value">@pending</div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <div class="distribution-label">
+                            <span class="legend-dot bg-completed"></span>
+                            Tamamlanan
+                        </div>
+                        <div class="distribution-value">
+                            @Model.CompletedFines
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <div class="distribution-label">
+                            <span class="legend-dot bg-rejected"></span>
+                            Reddedilen
+                        </div>
+                        <div class="distribution-value">
+                            @Model.RejectedFines
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <div class="distribution-label">
+                            <span class="legend-dot bg-other"></span>
+                            Diğer
+                        </div>
+                        <div class="distribution-value">@other</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-amount mt-4">
+
+                    <div class="d-flex align-items-center gap-2">
+                        <svg class="ui-icon">
+                            <use href="#icon-wallet"></use>
+                        </svg>
+                        <span>Toplam Ceza Tutarı</span>
+                    </div>
+
+                    <strong>
+                        @Model.TotalAmount.ToString("N2") TL
+                    </strong>
+
+                </div>
+            </section>
+        </div>
+
+        <div class="col-lg-4">
+            <section class="dashboard-panel h-100">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <h5>Hızlı İşlemler</h5>
+                        <p>Sık kullanılan işlemler</p>
+                    </div>
+
+                    <div class="panel-header-icon">
+                        <svg class="ui-icon">
+                            <use href="#icon-sparkles"></use>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+
+                    <a asp-controller="Vehicles"
+                       asp-action="Create"
+                       class="quick-action">
+
+                        <span class="quick-action-icon">
+                            <svg class="ui-icon">
+                                <use href="#icon-car"></use>
+                            </svg>
+                        </span>
+
+                        <span>Yeni Araç Ekle</span>
+
+                        <svg class="ui-icon quick-arrow">
+                            <use href="#icon-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <a asp-controller="TrafficFines"
+                       asp-action="Create"
+                       class="quick-action">
+
+                        <span class="quick-action-icon">
+                            <svg class="ui-icon">
+                                <use href="#icon-plus"></use>
+                            </svg>
+                        </span>
+
+                        <span>Yeni Ceza Oluştur</span>
+
+                        <svg class="ui-icon quick-arrow">
+                            <use href="#icon-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <a asp-controller="TrafficFines"
+                       asp-action="Index"
+                       class="quick-action">
+
+                        <span class="quick-action-icon">
+                            <svg class="ui-icon">
+                                <use href="#icon-search"></use>
+                            </svg>
+                        </span>
+
+                        <span>Cezaları İncele</span>
+
+                        <svg class="ui-icon quick-arrow">
+                            <use href="#icon-arrow"></use>
+                        </svg>
+                    </a>
+
+                </div>
+
+                @if (User.IsInRole(IdentitySeeder.ManagerRole)
+                || User.IsInRole(IdentitySeeder.FinanceRole))
+                {
+                    <div class="dashboard-role-note">
+
+                        <svg class="ui-icon">
+                            <use href="#icon-clock"></use>
+                        </svg>
+
+                        <strong>@myPending</strong>
+
+                        <span>
+                            Senin aşamanda onay bekleyen ceza
+                        </span>
+
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+
+    <!-- SON CEZALAR -->
+
+    <section class="dashboard-panel">
+
+        <div class="panel-heading">
+
+            <div>
+                <h5>Son Trafik Cezaları</h5>
+                <p>En son sisteme eklenen kayıtlar</p>
+            </div>
+
+            <a asp-controller="TrafficFines"
+               asp-action="Index"
+               class="btn btn-sm btn-outline-primary">
+
+                Tümünü Gör
+                <svg class="ui-icon">
+                    <use href="#icon-arrow"></use>
+                </svg>
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Tutanak No</th>
+                        <th>Plaka</th>
+                        <th>Tutar</th>
+                        <th>Ceza Tarihi</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (!Model.RecentFines.Any())
+                    {
+                        <tr>
+                            <td colspan="6"
+                                class="text-center py-5 text-muted">
+                                Henüz trafik cezası bulunmuyor.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var fine in Model.RecentFines)
+                        {
+                            <tr>
+                                <td class="fw-semibold">
+                                    @fine.FineNumber
+                                </td>
+
+                                <td>@fine.Vehicle.PlateNumber</td>
+
+                                <td>
+                                    @fine.Amount.ToString("N2") TL
+                                </td>
+
+                                <td>
+                                    @fine.FineDate.ToString("dd.MM.yyyy")
+                                </td>
+
+                                <td>
+                                    <span class="dashboard-status
+                                        @(fine.Status == FineStatus.Completed
+                                            ? "status-completed"
+                                            : fine.Status == FineStatus.Rejected
+                                                ? "status-rejected"
+                                                : "status-pending")">
+
+                                        @FineStatusHelper.GetDisplayName(fine.Status)
+
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <a asp-controller="TrafficFines"
+                                       asp-action="Details"
+                                       asp-route-id="@fine.Id"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Detay
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>

@@ -1,0 +1,228 @@
+﻿@model TrafficFineManagement.Models.TrafficFine
+@using TrafficFineManagement.Enums
+@using TrafficFineManagement.Seed
+@using TrafficFineManagement.Helpers
+
+@{
+    ViewData["Title"] = "Ceza Detayı";
+
+    bool canApprove =
+        (Model.Status == FineStatus.PendingManagerApproval &&
+         User.IsInRole(IdentitySeeder.ManagerRole))
+        ||
+        (Model.Status == FineStatus.PendingFinanceApproval &&
+         User.IsInRole(IdentitySeeder.FinanceRole));
+
+    string statusText = Model.Status switch
+    {
+        FineStatus.New => "Yeni",
+        FineStatus.PendingManagerApproval => "Yönetici Onayı Bekliyor",
+        FineStatus.PendingFinanceApproval => "Finans Onayı Bekliyor",
+        FineStatus.Completed => "Tamamlandı",
+        FineStatus.Rejected => "Reddedildi",
+        _ => "Bilinmiyor"
+    };
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between
+                align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Trafik Cezası Detayı</h2>
+            <p class="text-muted mb-0">
+                Tutanak No: @Model.FineNumber
+            </p>
+        </div>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            Listeye Dön
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Ceza Bilgileri</h5>
+        </div>
+
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Tutanak Numarası</dt>
+                <dd class="col-sm-8">@Model.FineNumber</dd>
+
+                <dt class="col-sm-4">Araç Plakası</dt>
+                <dd class="col-sm-8">
+                    @Model.Vehicle.PlateNumber
+                </dd>
+
+                <dt class="col-sm-4">Ceza Tutarı</dt>
+                <dd class="col-sm-8">
+                    @Model.Amount.ToString("N2") TL
+                </dd>
+
+                <dt class="col-sm-4">Ceza Tarihi</dt>
+                <dd class="col-sm-8">
+                    @Model.FineDate.ToString("dd.MM.yyyy")
+                </dd>
+
+                <dt class="col-sm-4">Açıklama</dt>
+                <dd class="col-sm-8">@Model.Description</dd>
+
+                <dt class="col-sm-4">Mevcut Durum</dt>
+                <dd class="col-sm-8">
+                    <span class="badge bg-primary">
+                        @statusText
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    @if (canApprove)
+    {
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0">Onay İşlemleri</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="ProcessApproval"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="trafficFineId"
+                           value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label for="explanation"
+                               class="form-label">
+                            Açıklama / Ret Gerekçesi
+                        </label>
+
+                        <textarea id="explanation"
+                                  name="explanation"
+                                  class="form-control"
+                                  rows="3"
+                                  maxlength="500"
+                                  placeholder="Ret işlemlerinde gerekçe zorunludur."></textarea>
+
+                        <small class="text-muted">
+                            Ret işlemi için açıklama yazmalısınız.
+                        </small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit"
+                                name="action"
+                                value="@((int)ApprovalAction.Approved)"
+                                class="btn btn-success">
+                            Onayla
+                        </button>
+
+                        <button type="submit"
+                                name="action"
+                                value="@((int)ApprovalAction.Rejected)"
+                                class="btn btn-danger">
+                            Reddet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Onay Geçmişi</h5>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0"
+                       style="min-width: 850px;">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Kullanıcı</th>
+                            <th>İşlem</th>
+                            <th>Önceki Durum</th>
+                            <th>Yeni Durum</th>
+                            <th>Açıklama</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (!Model.ApprovalHistories.Any())
+                        {
+                            <tr>
+                                <td colspan="6"
+                                    class="text-center py-4 text-muted">
+                                    Henüz onay işlemi bulunmuyor.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var history in
+                           Model.ApprovalHistories
+                           .OrderBy(h => h.ActionDate)
+                           .ThenBy(h => h.Id))
+                            {
+                                <tr>
+                                    <td>
+                                        @(history.ActionDate
+                                            .ToLocalTime()
+                                            .ToString("dd.MM.yyyy HH:mm"))
+                                    </td>
+
+                                    <td>
+                                        @history.User?.Email
+                                    </td>
+
+                                    <td>
+                                        @(history.Action ==
+                                            ApprovalAction.Approved
+                                            ? "Onay"
+                                            : "Ret")
+                                    </td>
+
+
+                                    <td>
+                                        @FineStatusHelper.GetDisplayName(history.PreviousStatus)
+                                    </td>
+                                    <td>
+                                        @FineStatusHelper.GetDisplayName(history.NewStatus)
+                                    </td>
+
+                                    <td style="min-width: 220px; white-space: normal;
+           overflow-wrap: anywhere;">
+                                        @(string.IsNullOrWhiteSpace(history.Explanation)
+                                            ? "-"
+                                            : history.Explanation)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+﻿@model TrafficFineManagement.ViewModels.CreateVehicleViewModel
+
+@{
+    ViewData["Title"] = "Yeni Araç Ekle";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+
+            <div class="mb-4">
+                <h2 class="fw-bold">Yeni Araç Ekle</h2>
+                <p class="text-muted">
+                    Araç bilgilerini doldurarak yeni bir kayıt oluşturun.
+                </p>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <form asp-controller="Vehicles"
+                          asp-action="Create"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="PlateNumber"
+                                   class="form-label"></label>
+                            <input asp-for="PlateNumber"
+                                   class="form-control"
+                                   placeholder="Örn: 34 ABC 123" />
+                            <span asp-validation-for="PlateNumber"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="VehicleType"
+                                   class="form-label"></label>
+
+                            <select asp-for="VehicleType"
+                                    class="form-select">
+                                <option value="">Araç tipi seçiniz</option>
+                                <option value="1">Binek</option>
+                                <option value="2">Çekici</option>
+                                <option value="3">Dorse</option>
+                                <option value="4">Kiralık Araç</option>
+                            </select>
+
+                            <span asp-validation-for="VehicleType"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Brand"
+                                   class="form-label"></label>
+                            <input asp-for="Brand"
+                                   class="form-control"
+                                   placeholder="Örn: Fiat" />
+                            <span asp-validation-for="Brand"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Model"
+                                   class="form-label"></label>
+                            <input asp-for="Model"
+                                   class="form-control"
+                                   placeholder="Örn: Egea" />
+                            <span asp-validation-for="Model"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-controller="Vehicles"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary">
+                                Geri Dön
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Aracı Kaydet
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

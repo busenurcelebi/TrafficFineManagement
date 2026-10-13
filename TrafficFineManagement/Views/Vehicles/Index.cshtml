@@ -1,0 +1,91 @@
+﻿@model IEnumerable<TrafficFineManagement.Models.Vehicle>
+@using TrafficFineManagement.Enums
+
+@{
+    ViewData["Title"] = "Araç Yönetimi";
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Araç Yönetimi</h2>
+            <p class="text-muted mb-0">
+                Sistemde kayıtlı araçları görüntüleyin.
+            </p>
+        </div>
+        <a asp-controller="Vehicles"
+           asp-action="Create"
+           class="btn btn-primary">
+            + Yeni Araç Ekle
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Kayıtlı Araçlar</h5>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Plaka</th>
+                            <th>Araç Tipi</th>
+                            <th>Marka</th>
+                            <th>Model</th>
+                            <th>Kayıt Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="5"
+                                    class="text-center py-5 text-muted">
+                                    Henüz kayıtlı araç bulunmuyor.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var vehicle in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">
+                                        @vehicle.PlateNumber
+                                    </td>
+                                    <td>
+                                        @switch (vehicle.VehicleType)
+                                        {
+                                            case VehicleType.PassengerCar:
+                                                <span>Binek</span>
+                                                break;
+                                            case VehicleType.Tractor:
+                                                <span>Çekici</span>
+                                                break;
+                                            case VehicleType.Trailer:
+                                                <span>Dorse</span>
+                                                break;
+                                            case VehicleType.RentalCar:
+                                                <span>Kiralık Araç</span>
+                                                break;
+                                        }
+                                    </td>
+                                    <td>@vehicle.Brand</td>
+                                    <td>@vehicle.Model</td>
+
+                                    <td>
+                                        @(vehicle.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm"))
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,367 @@
+﻿
+:root {
+    --ff-purple: #8067b2;
+    --ff-purple-dark: #55417f;
+    --ff-text: #303345;
+    --ff-muted: #85899b;
+    --ff-border: #e9e5f1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f8f7fc;
+    color: var(--ff-text);
+}
+
+.svg-icon-library {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.ui-icon {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.ff-login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 22px;
+}
+
+.ff-login-container {
+    width: 100%;
+    max-width: 1110px;
+}
+
+.ff-login-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+}
+
+.ff-login-brand-icon {
+    width: 43px;
+    height: 43px;
+    background: var(--ff-purple);
+    color: #fff;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .ff-login-brand-icon .ui-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+.ff-login-brand strong {
+    display: block;
+    color: var(--ff-purple-dark);
+    font-size: 23px;
+    letter-spacing: -.5px;
+}
+
+.ff-login-brand small {
+    display: block;
+    color: #9990aa;
+    font-size: 11px;
+}
+
+.ff-login-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 20px 70px rgba(52, 40, 85, .07);
+    overflow: hidden;
+    min-height: 560px;
+}
+
+.ff-login-intro {
+    background: linear-gradient(145deg, #e9def9, #f4e9f3);
+    padding: 55px 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ff-intro-icon {
+    width: 66px;
+    height: 66px;
+    border-radius: 19px;
+    background: #ffffffa8;
+    color: var(--ff-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 35px;
+}
+
+    .ff-intro-icon .ui-icon {
+        width: 33px;
+        height: 33px;
+    }
+
+.ff-intro-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #927caf;
+    margin-bottom: 16px;
+}
+
+.ff-login-intro h1 {
+    font-size: clamp(27px, 3vw, 40px);
+    line-height: 1.22;
+    font-weight: 750;
+    color: #493b69;
+    margin-bottom: 20px;
+}
+
+    .ff-login-intro h1 span {
+        display: block;
+        color: #9476bc;
+    }
+
+.ff-login-intro p {
+    color: #756a89;
+    line-height: 1.8;
+    font-size: 14px;
+    max-width: 380px;
+}
+
+.ff-intro-features {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.ff-intro-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #615579;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+    .ff-intro-feature .ui-icon {
+        color: var(--ff-purple);
+    }
+
+.ff-login-form-panel {
+    padding: 60px 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ff-login-eyebrow {
+    font-size: 11px;
+    color: #927caf;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.ff-login-form-heading h2 {
+    font-size: 29px;
+    font-weight: 750;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.ff-login-form-heading p {
+    color: var(--ff-muted);
+    font-size: 13px;
+    margin-bottom: 35px;
+}
+
+.ff-form-group {
+    margin-bottom: 20px;
+}
+
+    .ff-form-group label {
+        display: block;
+        color: #595269;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .ff-form-group .form-control {
+        width: 100%;
+        border: 1px solid var(--ff-border);
+        border-radius: 11px;
+        padding: 13px 15px;
+        font-size: 14px;
+        background: #fbfaff;
+    }
+
+        .ff-form-group .form-control:focus {
+            border-color: #aa92d4;
+            box-shadow: 0 0 0 3px #eae2fa;
+            outline: none;
+        }
+
+    .ff-form-group .text-danger {
+        display: block;
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+.ff-login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.ff-remember-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #6d657e;
+}
+
+.ff-login-options a,
+.ff-login-register a {
+    color: var(--ff-purple-dark);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+    .ff-login-options a:hover,
+    .ff-login-register a:hover {
+        text-decoration: underline;
+    }
+
+.ff-login-submit {
+    width: 100%;
+    border: 0;
+    border-radius: 11px;
+    background: var(--ff-purple);
+    color: #fff;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 650;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+
+    .ff-login-submit:hover {
+        background: var(--ff-purple-dark);
+        transform: translateY(-1px);
+    }
+
+    .ff-login-submit .ui-icon {
+        width: 17px;
+        height: 17px;
+    }
+
+.ff-login-register {
+    text-align: center;
+    font-size: 12px;
+    color: #8e879c;
+    margin-top: 24px;
+}
+
+.ff-login-security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 35px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ff-border);
+    font-size: 11px;
+    color: #9b94a8;
+}
+
+    .ff-login-security .ui-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+.ff-login-footer {
+    margin-top: 25px;
+    text-align: center;
+    color: #aaa3b5;
+    font-size: 11px;
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+    .ff-login-intro {
+        padding: 38px 28px;
+    }
+
+    .ff-login-form-panel {
+        padding: 45px 32px;
+    }
+}
+
+/* MOBIL */
+
+@media (max-width: 700px) {
+    .ff-login-page {
+        padding: 20px 15px;
+    }
+
+    .ff-login-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ff-login-intro {
+        padding: 30px 25px;
+    }
+
+    .ff-intro-icon,
+    .ff-intro-features {
+        display: none;
+    }
+
+    .ff-login-intro h1 {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .ff-login-intro p {
+        margin-bottom: 0;
+    }
+
+    .ff-login-form-panel {
+        padding: 35px 25px;
+    }
+
+    .ff-login-form-heading h2 {
+        font-size: 25px;
+    }
+}
