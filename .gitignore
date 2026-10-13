@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+# FineFlow - Local configuration and secrets
+appsettings.Local.json
+appsettings.*.local.json
+.env
+.env.*
+!.env.example
+secrets.json
