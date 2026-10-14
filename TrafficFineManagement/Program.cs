@@ -28,6 +28,8 @@ var app = builder.Build();
 
 
 
+
+
 using (var scope = app.Services.CreateScope())
 {
     await IdentitySeeder.SeedRolesAsync(
@@ -35,8 +37,9 @@ using (var scope = app.Services.CreateScope())
 
     if (app.Environment.IsDevelopment())
     {
-        await IdentitySeeder.SeedTestUserRolesAsync(
-            scope.ServiceProvider);
+        await IdentitySeeder.SeedDemoUsersAsync(
+            scope.ServiceProvider,
+            app.Configuration);
     }
 }
 

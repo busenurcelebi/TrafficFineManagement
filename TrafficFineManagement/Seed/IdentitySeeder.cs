@@ -77,5 +77,68 @@ namespace TrafficFineManagement.Seed
                 }
             }
         }
+
+        public static async Task SeedDemoUsersAsync(
+            IServiceProvider serviceProvider,
+            IConfiguration configuration)
+        {
+            var password = configuration["DemoUsers:Password"];
+
+            // Demo şifresi tanımlanmamışsa hesap oluşturma.
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                return;
+            }
+
+            var userManager = serviceProvider
+                .GetRequiredService<UserManager<IdentityUser>>();
+
+            var demoUsers = new Dictionary<string, string?>
+    {
+        { "manager@test.local", ManagerRole },
+        { "finance@test.local", FinanceRole },
+        { "user@test.local", null }
+    };
+
+            foreach (var demoUser in demoUsers)
+            {
+                var user = await userManager.FindByEmailAsync(demoUser.Key);
+
+                if (user == null)
+                {
+                    user = new IdentityUser
+                    {
+                        UserName = demoUser.Key,
+                        Email = demoUser.Key,
+                        EmailConfirmed = true
+                    };
+
+                    var createResult = await userManager
+                        .CreateAsync(user, password);
+
+                    if (!createResult.Succeeded)
+                    {
+                        throw new InvalidOperationException(
+                            string.Join(", ",
+                                createResult.Errors.Select(e => e.Description)));
+                    }
+                }
+
+                if (demoUser.Value != null &&
+                    !await userManager.IsInRoleAsync(user, demoUser.Value))
+                {
+                    var roleResult = await userManager
+                        .AddToRoleAsync(user, demoUser.Value);
+
+                    if (!roleResult.Succeeded)
+                    {
+                        throw new InvalidOperationException(
+                            string.Join(", ",
+                                roleResult.Errors.Select(e => e.Description)));
+                    }
+                }
+            }
+        }
+
     }
 }
